@@ -15,7 +15,31 @@ const UserSchema = new Schema({
         unique: true,
         required: 'An email is required!',
         match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, 'Please enter a valid e-mail address']
-    }
+    },
+    // An array of all thoughts created by the user
+    thoughts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Thought'
+        }
+    ],
+    // An array of all friends (other users) of the user
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
+},
+    {
+        toJSON: {
+            // Use virtuals, specifically to tally the number of friends for any given User
+            virtuals: true,
+        }
+    });
+
+User.virtual('friendCount').get(function () {
+    return this.friends.length;
 });
 
 // Uses the Schema for Users to create a User model
