@@ -11,13 +11,13 @@ const ReactionSchema = new Schema({
     // The text content of the reaction - is required and cannot be longer than 280 characters
     reactionBody: {
         type: String,
-        required: 'Your reaction must have body text!',
-        maxlength: [280, 'Your reaction cannot be longer than 280 characters!']
+        required: 'reactionBody is required!',
+        maxlength: [280, 'reactionBody must be at most 280 character in length!']
     },
     // Username of the reaction owner - is required
     username: {
         type: String,
-        required: 'A username is required!'
+        required: 'username is required!'
     },
     // Timestamp of the reaction creation
     createdAt: {
@@ -31,4 +31,45 @@ const ReactionSchema = new Schema({
             // Use getters, specifically for displaying the createdAt property
             getters: true
         }
-    })
+    });
+
+const ThoughtSchema = new Schema({
+    // Thoughts are required and must be between 1 and 280 characters in length
+    thoughtText: {
+        type: String,
+        required: 'thoughtText is required!',
+        minLength: [1, 'thoughtText must be at least 1 character in length!'],
+        maxLength: [280, 'thoughtText must be at most 280 character in length!']
+    },
+    // Timestamp of the thought creation
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get: (createdAtVal) => format(createdAtVal, 'MMM d, yyyy')
+    },
+    // Username of the thought owner - is required
+    username: {
+        type: String,
+        required: 'username is required!'
+    },
+    reactions: [ReactionSchema]
+},
+    {
+        toJSON: {
+            // Use virtuals, specifically to tally the number of Reactions for any given Thought
+            virtuals: true,
+            // Use getters, specifically for displaying the createdAt property
+            getters: true
+        },
+        id: false
+    });
+
+// Adds a virtual to tally the number of Reactions for any given Thought
+ThoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
+});
+
+// Uses the Schema for Thoughts to create a Thought model
+const Thought = model('Thought', ThoughtSchema);
+
+module.exports = Thought;
