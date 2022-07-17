@@ -23,14 +23,15 @@ const ReactionSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: (createdAtVal) => format(createdAtVal, 'MMM d, yyyy')
+        get: (createdAtVal) => format(createdAtVal, 'MMM d, yyyy, hh:mm')
     }
 },
     {
         toJSON: {
             // Use getters, specifically for displaying the createdAt property
             getters: true
-        }
+        },
+        _id: false
     });
 
 const ThoughtSchema = new Schema({
@@ -45,7 +46,7 @@ const ThoughtSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: (createdAtVal) => format(createdAtVal, 'MMM d, yyyy')
+        get: (createdAtVal) => format(createdAtVal, 'MMM d, yyyy, hh:mm')
     },
     // Username of the thought owner - is required
     username: {
@@ -60,8 +61,7 @@ const ThoughtSchema = new Schema({
             virtuals: true,
             // Use getters, specifically for displaying the createdAt property
             getters: true
-        },
-        id: false
+        }
     });
 
 // Adds a virtual to tally the number of Reactions for any given Thought

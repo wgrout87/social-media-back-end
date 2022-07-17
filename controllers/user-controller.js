@@ -5,6 +5,18 @@ const userController = {
     // Get all users
     getAllUsers(req, res) {
         User.find({})
+            // Shows the thought entries rather than just their ID
+            .populate({
+                path: 'thoughts',
+                select: '-__v'
+            })
+            // Shows the friend entries rather than just their ID
+            .populate({
+                path: 'friends',
+                select: '-__v'
+            })
+            // Removes __v property from the returned data
+            .select('-__v')
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {
                 console.log(err);
@@ -15,6 +27,18 @@ const userController = {
     // Get a single user
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
+            // Shows the thought entries rather than just their ID
+            .populate({
+                path: 'thoughts',
+                select: '-__v'
+            })
+            // Shows the friend entries rather than just their ID
+            .populate({
+                path: 'friends',
+                select: '-__v'
+            })
+            // Removes __v property from the returned data
+            .select('-__v')
             .then(dbUserData => {
                 // Checks to see if no user was found
                 if (!dbUserData) {
