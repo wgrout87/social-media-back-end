@@ -1,12 +1,15 @@
 const { Schema, model, Types } = require('mongoose');
 
+// Schema for Users
 const UserSchema = new Schema({
+    // Usernames must be unique, are required, and are trimmed
     username: {
         type: String,
         unique: true,
         required: 'A username is required!',
         trim: true
     },
+    // Emails must be unique, are required, and are validated
     email: {
         type: String,
         unique: true,
@@ -15,6 +18,7 @@ const UserSchema = new Schema({
     }
 });
 
+// Uses the Schema for Users to create a User model
 const User = model('User', UserSchema);
 
 module.exports = User;
