@@ -46,11 +46,11 @@ DELETE a friend: '/api/users/:userId/friends/:friendId'
 Thought Routes:
 
 ```
-GET all users: '/api/thoughts'
-GET a single user: '/api/thoughts/:id'
-POST a user: '/api/thoughts'    // Requires a JSON body with username and thoughtText properties
-PUT a user: '/api/thoughts/:id'    // Requires a JSON body with username and/or thoughtText properties
-DELETE a user: '/api/thoughts/:id'
+GET all thoughts: '/api/thoughts'
+GET a single thought: '/api/thoughts/:id'
+POST a thought: '/api/thoughts/:id'    // Requires a JSON body with username and thoughtText properties
+PUT a thought: '/api/thoughts/:id'    // Requires a JSON body with username and/or thoughtText properties
+DELETE a thought: '/api/thoughts/:id'
 POST a reaction: '/api/thoughts/:userId/friends/:friendId'    // Requires a JSON body with username and reactionBody properties
 DELETE a reaction: '/api/thoughts/:userId/friends/:friendId'
 ```
