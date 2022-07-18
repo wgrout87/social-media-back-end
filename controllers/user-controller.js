@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 // A controller for handling interaction with the User model
 const userController = {
@@ -46,6 +46,7 @@ const userController = {
                     return;
                 }
 
+                console.log(dbUserData.thoughts.length)
                 res.json(dbUserData);
             })
             .catch(err => {
@@ -86,8 +87,10 @@ const userController = {
                     return;
                 }
 
-                res.json(dbUserData);
+                // Delete all of the User's thoughts
+                return Thought.deleteMany({ _id: { $in: dbUserData.thoughts } });
             })
+            .then(dbResponse => res.json({ message: `User deleted along with ${dbResponse.deletedCount} thoughts` }))
             .catch(err => res.status(400).json(err));
     },
 

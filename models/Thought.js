@@ -31,7 +31,8 @@ const ReactionSchema = new Schema({
             // Use getters, specifically for displaying the createdAt property
             getters: true
         },
-        _id: false
+        _id: false,
+        id: false
     });
 
 const ThoughtSchema = new Schema({
@@ -61,7 +62,8 @@ const ThoughtSchema = new Schema({
             virtuals: true,
             // Use getters, specifically for displaying the createdAt property
             getters: true
-        }
+        },
+        id: false
     });
 
 // Adds a virtual to tally the number of Reactions for any given Thought

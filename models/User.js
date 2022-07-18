@@ -35,7 +35,8 @@ const UserSchema = new Schema({
         toJSON: {
             // Use virtuals, specifically to tally the number of friends for any given User
             virtuals: true,
-        }
+        },
+        id: false
     });
 
 UserSchema.virtual('friendCount').get(function () {
